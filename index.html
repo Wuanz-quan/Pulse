@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pulse</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/notes.css" />
+  </head>
+  <body>
+    <div class="mainBody">
+      <!-- NAV -->
+      <nav class="nav">
+        <div class="nav-inner">
+          <div class="nav-logo">PULSE</div>
+          <div class="nav-topics">
+            <div class="topic-dropdown" id="topic-dropdown">
+              <button
+                type="button"
+                class="topic-dropdown-btn"
+                id="topic-dropdown-btn"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+              >
+                <span id="topic-dropdown-label">Tin Nổi Bật</span>
+                <svg
+                  class="topic-dropdown-arrow"
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                >
+                  <path
+                    d="M1 1l4 4 4-4"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              <ul
+                class="topic-dropdown-menu"
+                id="topic-dropdown-menu"
+                role="listbox"
+                aria-labelledby="topic-dropdown-btn"
+              >
+                <li
+                  class="topic-dropdown-option active"
+                  role="option"
+                  data-topic="top"
+                  aria-selected="true"
+                >
+                  Tin Nổi Bật
+                </li>
+                <li
+                  class="topic-dropdown-option"
+                  role="option"
+                  data-topic="technology"
+                  aria-selected="false"
+                >
+                  Công Nghệ
+                </li>
+                <li
+                  class="topic-dropdown-option"
+                  role="option"
+                  data-topic="science"
+                  aria-selected="false"
+                >
+                  Khoa Học
+                </li>
+                <li
+                  class="topic-dropdown-option"
+                  role="option"
+                  data-topic="business"
+                  aria-selected="false"
+                >
+                  Kinh Doanh
+                </li>
+                <li
+                  class="topic-dropdown-option"
+                  role="option"
+                  data-topic="sports"
+                  aria-selected="false"
+                >
+                  Thể Thao
+                </li>
+                <li
+                  class="topic-dropdown-option"
+                  role="option"
+                  data-topic="entertainment"
+                  aria-selected="false"
+                >
+                  Giải Trí
+                </li>
+                <li
+                  class="topic-dropdown-option"
+                  role="option"
+                  data-topic="health"
+                  aria-selected="false"
+                >
+                  Sức Khỏe
+                </li>
+              </ul>
+            </div>
+          </div>
+          <form class="nav-search" id="nav-search" role="search">
+            <input
+              type="search"
+              id="search-input"
+              class="nav-search-input"
+              placeholder="Tìm kiếm tin tức…"
+              aria-label="Tìm kiếm tin tức"
+              autocomplete="off"
+            />
+            <button type="submit" class="nav-search-btn" aria-label="Tìm kiếm">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="7"
+                  cy="7"
+                  r="5.5"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <path
+                  d="M15 15l-3.5-3.5"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+          </form>
+          <a href="premium.html" class="premium-explore-btn"
+            >Khám Phá Premium</a
+          >
+          <div class="nav-auth" id="nav-auth">
+            <a href="login.html" class="auth-btn">Đăng Nhập</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="mainContent">
+        <main class="content">
+          <div class="page-topic-label" id="section-label">Tin Nổi Bật</div>
+          <div class="news-container" id="news-container">
+            <!-- Sections rendered by JS -->
+            <div class="loading">
+              <div class="spinner"></div>
+              <span>Đang tải tin tức…</span>
+            </div>
+          </div>
+        </main>
+      </div>
+      <!-- MAIN CONTENT -->
+
+      <!-- POPUP AD: slides in from the left, dismissible -->
+      <div class="popup-ad hidden" id="popup-ad">
+        <button
+          class="popup-ad-close"
+          id="popup-ad-close"
+          aria-label="Đóng quảng cáo"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1 1l12 12M13 1L1 13"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+        <img class="popup-ad-img" src="/images/ad-banner.svg" alt="Quảng cáo" />
+      </div>
+
+      <!-- NOTES: floating trigger -->
+      <button class="notes-trigger" id="notes-trigger" aria-label="Mở ghi chú">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 2l3 3-8.5 8.5H2.5v-3L11 2z"
+            stroke="currentColor"
+            stroke-width="1.3"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+
+      <!-- NOTES: modal with 3 tabs -->
+      <div class="notes-modal" id="notes-modal">
+        <div class="notes-card">
+          <button
+            class="notes-close"
+            id="notes-close"
+            aria-label="Đóng ghi chú"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 1l12 12M13 1L1 13"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+
+          <div class="notes-tabs">
+            <button class="notes-tab active" data-tab="write">Viết</button>
+            <button class="notes-tab" data-tab="saved">
+              Đã lưu
+              <span class="notes-count hidden" id="notes-count"></span>
+            </button>
+            <button class="notes-tab notes-tab-save" id="notes-save-btn">
+              Lưu
+            </button>
+            <button
+              class="notes-tab notes-tab-key"
+              id="notes-key-btn"
+              title="Cài đặt Gemini API key"
+              aria-label="Cài đặt Gemini API key"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="5"
+                  cy="11"
+                  r="3"
+                  stroke="currentColor"
+                  stroke-width="1.3"
+                />
+                <path
+                  d="M7 9l6-6M11 3l2 2M9 5l1.5 1.5"
+                  stroke="currentColor"
+                  stroke-width="1.3"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <!-- API key setup panel (hidden by default) -->
+          <div class="notes-key-panel hidden" id="notes-key-panel">
+            <label for="notes-key-input"
+              >Nhập Google Gemini API key (miễn phí) để bật tính năng tóm tắt
+              bằng AI:</label
+            >
+            <div class="notes-key-row">
+              <input
+                type="password"
+                id="notes-key-input"
+                placeholder="AIza..."
+                autocomplete="off"
+              />
+              <button id="notes-key-save">Lưu</button>
+            </div>
+            <p class="notes-key-hint">
+              Lấy key miễn phí tại
+              <a
+                href="https://aistudio.google.com/apikey"
+                target="_blank"
+                rel="noopener"
+                >aistudio.google.com/apikey</a
+              >. Key được lưu trong trình duyệt của bạn (localStorage), không
+              gửi đi đâu khác ngoài Google.
+            </p>
+          </div>
+
+          <!-- Tab 1: note space -->
+          <div class="notes-panel" id="notes-panel-write">
+            <input
+              type="text"
+              id="notes-title-input"
+              class="notes-title-input"
+              placeholder="Tiêu đề (không bắt buộc)"
+              maxlength="120"
+              autocomplete="off"
+            />
+            <textarea
+              id="notes-textarea"
+              class="notes-textarea"
+              placeholder="Ghi lại điều gì đó…"
+            ></textarea>
+          </div>
+
+          <!-- Tab 2: saved notes — file-list view, click a row to open it -->
+          <div class="notes-panel hidden" id="notes-panel-saved">
+            <div class="notes-saved-list" id="notes-saved-list"></div>
+            <div class="note-detail hidden" id="note-detail"></div>
+          </div>
+        </div>
+      </div>
+
+      <script type="module" src="/scripts/googleAPI.js"></script>
+      <script type="module" src="/scripts/notes.js"></script>
+      <script src="/scripts/popup-ad.js"></script>
+      <script type="module" src="/scripts/nav-auth.js"></script>
+      <script src="scripts/theme.js"></script>
+    </div>
+  </body>
+</html>

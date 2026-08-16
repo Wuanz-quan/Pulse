@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pulse — Đăng Ký</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/signup.css" />
+  </head>
+  <body>
+    <div class="mainBody auth-page">
+      <nav class="nav">
+        <div class="nav-inner">
+          <a href="index.html" class="nav-logo">PULSE</a>
+        </div>
+      </nav>
+
+      <main class="auth-main">
+        <div class="auth-card">
+          <h1 class="auth-title">Tạo tài khoản</h1>
+          <p class="auth-sub">Tham gia Pulse để luôn cập nhật tin tức</p>
+
+          <div id="auth-error" class="auth-error hidden"></div>
+
+          <div class="auth-form">
+            <div class="field-group">
+              <label class="field-label" for="name">Họ và Tên</label>
+              <input
+                class="field-input"
+                type="text"
+                id="name"
+                placeholder="Nguyễn Văn A"
+                autocomplete="name"
+              />
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="email">Email</label>
+              <input
+                class="field-input"
+                type="email"
+                id="email"
+                placeholder="...@example.com"
+                autocomplete="email"
+              />
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="password">Mật khẩu</label>
+              <div class="input-wrap">
+                <input
+                  class="field-input"
+                  type="password"
+                  id="password"
+                  placeholder="Tối thiểu 6 ký tự"
+                  autocomplete="new-password"
+                />
+                <button
+                  class="toggle-pw"
+                  type="button"
+                  aria-label="Hiện mật khẩu"
+                  data-target="password"
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 8s2.7-5 7-5 7 5 7 5-2.7 5-7 5-7-5-7-5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.3"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="confirm">Xác nhận mật khẩu</label>
+              <div class="input-wrap">
+                <input
+                  class="field-input"
+                  type="password"
+                  id="confirm"
+                  placeholder="Nhập lại mật khẩu"
+                  autocomplete="new-password"
+                />
+                <button
+                  class="toggle-pw"
+                  type="button"
+                  aria-label="Hiện mật khẩu"
+                  data-target="confirm"
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 8s2.7-5 7-5 7 5 7 5-2.7 5-7 5-7-5-7-5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.3"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <button class="submit-btn" id="signup-btn">
+              <span id="btn-text">Tạo tài khoản</span>
+              <span id="btn-spinner" class="btn-spinner hidden"></span>
+            </button>
+          </div>
+
+          <p class="auth-switch">
+            Đã có tài khoản? <a href="login.html">Đăng nhập</a>
+          </p>
+        </div>
+      </main>
+    </div>
+
+    <script src="scripts/theme.js"></script>
+    <script type="module">
+      import { auth } from "./scripts/firebase-config.js";
+      import {
+        createUserWithEmailAndPassword,
+        updateProfile,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) location.href = "index.html";
+      });
+
+      const nameEl = document.getElementById("name");
+      const emailEl = document.getElementById("email");
+      const passwordEl = document.getElementById("password");
+      const confirmEl = document.getElementById("confirm");
+      const errorEl = document.getElementById("auth-error");
+      const btn = document.getElementById("signup-btn");
+      const btnText = document.getElementById("btn-text");
+      const btnSpinner = document.getElementById("btn-spinner");
+
+      document.querySelectorAll(".toggle-pw").forEach((b) => {
+        b.addEventListener("click", () => {
+          const inp = document.getElementById(b.dataset.target);
+          inp.type = inp.type === "password" ? "text" : "password";
+        });
+      });
+
+      btn.addEventListener("click", async () => {
+        errorEl.classList.add("hidden");
+        const name = nameEl.value.trim();
+        const email = emailEl.value.trim();
+        const password = passwordEl.value;
+        const confirm = confirmEl.value;
+
+        if (!name || !email || !password || !confirm) {
+          showError("Vui lòng điền đầy đủ thông tin.");
+          return;
+        }
+        if (password.length < 6) {
+          showError("Mật khẩu phải có ít nhất 6 ký tự.");
+          return;
+        }
+        if (password !== confirm) {
+          showError("Mật khẩu không khớp.");
+          return;
+        }
+
+        setLoading(true);
+        try {
+          const cred = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password,
+          );
+          await updateProfile(cred.user, { displayName: name });
+          location.href = "index.html";
+        } catch (err) {
+          showError(friendlyError(err.code));
+          setLoading(false);
+        }
+      });
+
+      [nameEl, emailEl, passwordEl, confirmEl].forEach((el) =>
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") btn.click();
+        }),
+      );
+
+      function setLoading(on) {
+        btn.disabled = on;
+        btnText.classList.toggle("hidden", on);
+        btnSpinner.classList.toggle("hidden", !on);
+      }
+      function showError(msg) {
+        errorEl.textContent = msg;
+        errorEl.classList.remove("hidden");
+      }
+      function friendlyError(code) {
+        const map = {
+          "auth/email-already-in-use": "Tài khoản với email này đã tồn tại.",
+          "auth/invalid-email": "Vui lòng nhập địa chỉ email hợp lệ.",
+          "auth/weak-password":
+            "Mật khẩu quá yếu. Vui lòng dùng ít nhất 6 ký tự.",
+        };
+        return map[code] || "Đã có lỗi xảy ra. Vui lòng thử lại.";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,397 @@
+/* ── PREMIUM PAGE ───────────────────────────────────────────────────────
+   Tokens, fonts, reset, nav, .mainBody/.mainContent, popup-ad, and the
+   shared .auth-btn/.user-menu styles all come from style.css (linked
+   before this file in premium.html) so this page stays in sync with the
+   main site automatically. Only premium-page-specific rules live here. */
+
+.BackBtn {
+  display: inline-block;
+  padding: 7px 18px;
+  border-radius: 20px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.BackBtn:hover {
+  background: #e05550;
+}
+
+/* ── PAGE LAYOUT ─────────────────────────────────────────────────────── */
+.mainContent {
+  justify-content: center;
+}
+.premium-wrap {
+  width: 100%;
+  max-width: 960px;
+  padding: 40px 24px 80px;
+}
+
+/* Hero intro — mirrors .page-topic-label's underline-on-gradient treatment
+   from the main page instead of introducing a new heading style */
+.premium-hero {
+  text-align: center;
+  color: var(--text-on-gradient);
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.premium-hero h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+  color: var(--texts);
+}
+.premium-hero p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+.current-plan-banner {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 8px 20px;
+  border-radius: 20px;
+  background: rgba(255, 100, 94, 0.1);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--texts);
+}
+.current-plan-banner a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* ── PLAN CARDS — reuse .mag-panel's card language (white panel,
+   var(--radius), var(--card-shadow)) so plans read as the same family
+   of surface as the magazine sections on the homepage ────────────────── */
+.plans-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+  margin-bottom: 28px;
+}
+.plan-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 28px 26px;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 2px solid transparent;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+.plan-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.13);
+}
+.plan-card-premium {
+  border-color: var(--gold);
+  background: linear-gradient(160deg, #fffdf7, #fff);
+}
+.plan-card.current-plan {
+  border-color: var(--accent-alt);
+}
+
+.plan-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.plan-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--texts);
+}
+.plan-tag {
+  background-color: var(--gold-light);
+  color: var(--gold-dark);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.plan-price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 10px 0 4px;
+}
+.price-amount {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: bold;
+  color: var(--texts);
+}
+.price-period {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.plan-tagline {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.plan-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  flex: 1;
+  margin-bottom: 24px;
+}
+.plan-features li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 0.86rem;
+  color: var(--texts);
+  line-height: 1.4;
+}
+.plan-features li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 12px;
+  height: 12px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2 6.5l2.5 2.5L10 3' stroke='%23000000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.plan-features li.feature-disabled {
+  color: var(--text-muted);
+}
+.plan-features li.feature-disabled::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M1 1l10 10M11 1L1 11' stroke='%23c7c7d1' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.plan-cta {
+  border: none;
+  border-radius: 24px;
+  padding: 12px 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s,
+    transform 0.15s;
+}
+.plan-cta:active {
+  transform: scale(0.97);
+}
+.plan-cta-fill {
+  background-color: var(--gold);
+  color: #fff;
+}
+.plan-cta-fill:hover {
+  filter: brightness(1.06);
+}
+.plan-cta-outline {
+  background: none;
+  border: 1.5px solid var(--divider);
+  color: var(--text-muted);
+  cursor: default;
+}
+.plan-cta-outline.cta-active {
+  border-color: var(--accent);
+  color: var(--accent);
+  cursor: pointer;
+}
+.plan-cta-outline.cta-active:hover {
+  background: rgba(255, 100, 94, 0.08);
+}
+.plan-cta:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.premium-note {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* ── MODALS ───────────────────────────────────────────────────────────── */
+.premium-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 20, 30, 0.55);
+  backdrop-filter: blur(3px);
+  padding: 20px;
+}
+.premium-modal.open {
+  display: flex;
+}
+.premium-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 30px 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+.premium-modal-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--texts);
+  margin-bottom: 6px;
+}
+.premium-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  border: none;
+  background: none;
+  font-size: 1rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1;
+  padding: 6px;
+}
+.premium-modal-close:hover {
+  color: var(--accent);
+}
+
+.payment-sub {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+#payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.payment-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.payment-row {
+  display: flex;
+  gap: 12px;
+}
+.payment-row .payment-label {
+  flex: 1;
+}
+.payment-input {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--divider);
+  color: var(--texts);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.payment-input:focus {
+  border-color: var(--accent);
+}
+
+.payment-submit-btn {
+  margin-top: 6px;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  background-color: var(--gold);
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  transition: filter 0.2s;
+}
+.payment-submit-btn:hover {
+  filter: brightness(1.06);
+}
+.payment-danger-btn {
+  background: linear-gradient(120deg, var(--accent), #e05550);
+}
+.payment-link-btn {
+  margin-top: 18px;
+}
+
+.payment-view.hidden {
+  display: none;
+}
+
+.payment-processing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 26px 0 8px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+/* Distinct spinner style for the payment modal (gold accent, on white) —
+   .spinner itself (size, animation) is already defined in style.css. */
+.payment-processing .spinner {
+  border: 3px solid var(--divider);
+  border-top-color: var(--gold);
+}
+.payment-success {
+  text-align: center;
+  padding: 8px 0;
+}
+.success-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: var(--accent-alt);
+  color: #fff;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.payment-success h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--texts);
+  margin-bottom: 8px;
+}
+.payment-success p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────────── */
+@media (max-width: 680px) {
+  .plans-grid {
+    grid-template-columns: 1fr;
+  }
+  .premium-hero h1 {
+    font-size: 1.5rem;
+  }
+}

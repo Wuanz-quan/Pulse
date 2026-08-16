@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pulse - Premium</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/premium.css" />
+  </head>
+  <body>
+    <div class="mainBody">
+      <nav class="nav">
+        <div class="nav-inner">
+          <a href="index.html" class="BackBtn">Quay Lại</a>
+          <div class="nav-logo">PULSE</div>
+          <div class="nav-auth" id="nav-auth">
+            <a href="login.html" class="auth-btn">Đăng Nhập</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="mainContent">
+        <div class="premium-wrap">
+          <section class="premium-hero">
+            <h1>Nâng Cấp Trải Nghiệm Của Bạn</h1>
+            <p>
+              Chọn gói phù hợp với nhu cầu đọc tin của bạn. Hủy bất cứ lúc nào.
+            </p>
+            <div class="current-plan-banner" id="current-plan-banner"></div>
+          </section>
+
+          <section class="plans-grid">
+            <!-- FREE PLAN -->
+            <div class="plan-card" id="plan-free" data-plan="free">
+              <div class="plan-badge-row">
+                <span class="plan-name">Miễn Phí</span>
+              </div>
+              <div class="plan-price">
+                <span class="price-amount">0₫</span>
+                <span class="price-period">/ mãi mãi</span>
+              </div>
+              <p class="plan-tagline">Đủ dùng cho việc đọc tin hằng ngày.</p>
+              <ul class="plan-features">
+                <li>Đọc tin tức từ các nguồn uy tín</li>
+                <li>7 chuyên mục tin tức</li>
+                <li>Ghi chú cơ bản, lưu trên thiết bị</li>
+                <li class="feature-disabled">Có quảng cáo</li>
+                <li class="feature-disabled">Không có nội dung độc quyền</li>
+              </ul>
+              <button class="plan-cta plan-cta-outline" id="btn-free">
+                Gói Hiện Tại
+              </button>
+            </div>
+
+            <!-- PREMIUM PLAN -->
+            <div
+              class="plan-card plan-card-premium"
+              id="plan-premium"
+              data-plan="premium"
+            >
+              <div class="plan-badge-row">
+                <span class="plan-name">Premium</span>
+                <span class="plan-tag">Phổ Biến Nhất</span>
+              </div>
+              <div class="plan-price">
+                <span class="price-amount">49.000₫</span>
+                <span class="price-period">/ tháng</span>
+              </div>
+              <p class="plan-tagline">
+                Trải nghiệm đọc tin không giới hạn, không quảng cáo.
+              </p>
+              <ul class="plan-features">
+                <li>Mọi tính năng của gói Miễn Phí</li>
+                <li>Không quảng cáo</li>
+                <li>Ghi chú không giới hạn</li>
+                <li>Nội dung độc quyền &amp; phân tích chuyên sâu</li>
+                <li>Huy hiệu Premium trên hồ sơ</li>
+              </ul>
+              <button class="plan-cta plan-cta-fill" id="btn-upgrade">
+                Nâng Cấp Ngay
+              </button>
+            </div>
+          </section>
+
+          <p class="premium-note">
+            Đây là bản demo — không có giao dịch thanh toán thực nào được thực
+            hiện.
+          </p>
+        </div>
+      </div>
+
+      <!-- POPUP AD: slides in from the left, dismissible -->
+      <div class="popup-ad hidden" id="popup-ad">
+        <button
+          class="popup-ad-close"
+          id="popup-ad-close"
+          aria-label="Đóng quảng cáo"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1 1l12 12M13 1L1 13"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+        <img class="popup-ad-img" src="/images/ad-banner.svg" alt="Quảng cáo" />
+      </div>
+
+      <!-- PAYMENT MODAL -->
+      <div class="premium-modal" id="payment-modal">
+        <div class="premium-modal-card">
+          <button
+            class="premium-modal-close"
+            id="payment-close"
+            aria-label="Đóng"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 1l12 12M13 1L1 13"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+
+          <div class="payment-view" id="payment-view-form">
+            <h2>Nâng Cấp Lên Premium</h2>
+            <p class="payment-sub">49.000₫ / tháng · Hủy bất cứ lúc nào</p>
+
+            <form id="payment-form">
+              <label class="payment-label">
+                Số thẻ
+                <input
+                  type="text"
+                  id="card-number"
+                  class="payment-input"
+                  placeholder="4242 4242 4242 4242"
+                  maxlength="19"
+                  autocomplete="off"
+                  required
+                />
+              </label>
+              <div class="payment-row">
+                <label class="payment-label">
+                  Hết hạn
+                  <input
+                    type="text"
+                    id="card-exp"
+                    class="payment-input"
+                    placeholder="MM/YY"
+                    maxlength="5"
+                    autocomplete="off"
+                    required
+                  />
+                </label>
+                <label class="payment-label">
+                  CVC
+                  <input
+                    type="text"
+                    id="card-cvc"
+                    class="payment-input"
+                    placeholder="123"
+                    maxlength="3"
+                    autocomplete="off"
+                    required
+                  />
+                </label>
+              </div>
+              <label class="payment-label">
+                Tên chủ thẻ
+                <input
+                  type="text"
+                  id="card-name"
+                  class="payment-input"
+                  placeholder="NGUYEN VAN A"
+                  autocomplete="off"
+                  required
+                />
+              </label>
+              <button
+                type="submit"
+                class="payment-submit-btn"
+                id="payment-submit"
+              >
+                Xác Nhận Thanh Toán
+              </button>
+            </form>
+          </div>
+
+          <div class="payment-view hidden" id="payment-view-processing">
+            <div class="payment-processing">
+              <div class="spinner"></div>
+              <span>Đang xử lý thanh toán…</span>
+            </div>
+          </div>
+
+          <div class="payment-view hidden" id="payment-view-success">
+            <div class="payment-success">
+              <div class="success-icon">
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 28 28"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="14"
+                    cy="14"
+                    r="12"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  />
+                  <path
+                    d="M9 14.5l3.2 3.2L19 11"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+              <h3>Chào mừng đến với Premium!</h3>
+              <p>Tài khoản của bạn đã được nâng cấp thành công.</p>
+              <button class="payment-submit-btn" id="payment-done">Xong</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOGIN REQUIRED MODAL -->
+      <div class="premium-modal" id="login-required-modal">
+        <div class="premium-modal-card">
+          <button
+            class="premium-modal-close"
+            id="login-required-close"
+            aria-label="Đóng"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 1l12 12M13 1L1 13"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+          <h2>Cần Đăng Nhập</h2>
+          <p class="payment-sub">Bạn cần đăng nhập để nâng cấp lên Premium.</p>
+          <a href="login.html" class="payment-submit-btn payment-link-btn"
+            >Đăng Nhập Ngay</a
+          >
+        </div>
+      </div>
+
+      <!-- CANCEL CONFIRM MODAL -->
+      <div class="premium-modal" id="cancel-modal">
+        <div class="premium-modal-card">
+          <button
+            class="premium-modal-close"
+            id="cancel-modal-close"
+            aria-label="Đóng"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 1l12 12M13 1L1 13"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+          <h2>Hủy Premium?</h2>
+          <p class="payment-sub">
+            Bạn sẽ mất quyền truy cập vào các tính năng Premium ngay lập tức.
+          </p>
+          <button
+            class="payment-submit-btn payment-danger-btn"
+            id="cancel-confirm-btn"
+          >
+            Hủy Gói Premium
+          </button>
+        </div>
+      </div>
+
+      <script type="module" src="/scripts/premium.js"></script>
+      <script type="module" src="/scripts/nav-auth.js"></script>
+      <script src="/scripts/popup-ad.js"></script>
+      <script src="scripts/theme.js"></script>
+    </div>
+  </body>
+</html>
