@@ -1,38 +1,4 @@
 (function () {
-  /* ============================================================
-     WHY THIS FILE WAS REWRITTEN
-     ------------------------------------------------------------
-     The old version invented its own variable names
-     (--bg-page, --bg-header, --bg-card, --text-main, ...) and
-     tried to re-skin the site with broad selectors like
-     [class*="-card"]. Problem: style.css / article.css /
-     premium.css / notes.css never use those variable names —
-     they use --nav-bg, --card-bg, --texts, --text-muted,
-     --divider, --gold, etc. So switching theme barely changed
-     anything, and a handful of hard-coded #fff/white elements
-     (popup ad, notes paper, premium modal) stayed white forever
-     in dark mode.
-
-     This version:
-       1. Redefines the REAL tokens the site already uses, so
-          every page that reads var(--card-bg) etc. actually
-          repaints.
-       2. Patches the few literal (non-variable) white/cream
-          spots so nothing stays blindingly white in dark mode.
-       3. Adds --gold-dark, which style.css/premium.css reference
-          but which was never defined anywhere (bug).
-       4. Adds a real @keyframes spin fallback, since style.css
-          uses `animation: spin ...` but only login.css/signup.css
-          (which aren't loaded on index/article/premium) defined
-          the keyframes (bug).
-       5. Replaces the emoji sun/moon toggle with inline SVG line
-          icons using currentColor, consistent with the rest of
-          the site's icon system.
-       6. Keeps the toggle in sync with OS theme changes when the
-          user hasn't explicitly chosen a theme (previously it
-          only read the system preference once, on load).
-     ============================================================ */
-
   const STORAGE_KEY = "pulse_news_theme";
 
   const themeStyles = document.createElement("style");
