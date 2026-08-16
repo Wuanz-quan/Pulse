@@ -1,30 +1,4 @@
-// ── SHARED AI SUMMARIZATION ENGINE (Google Gemini — free tier only) ──
-// Used by googleAPI.js (card summaries), article.js (article page), and
-// notes.js (saved notes). Everything about *how* we talk to Gemini lives
-// here — structured output, grounding, caching, and free-quota fallback —
-// so an accuracy fix in one place fixes all three surfaces instead of
-// three copies quietly drifting apart.
-//
-// Design goals for this module specifically:
-//   1. ACCURATE  — structured JSON output instead of free-form prose, an
-//      explicit "not enough information" escape hatch so the model isn't
-//      forced to pad with invented detail, and a post-hoc numeric
-//      grounding check against the source text.
-//   2. FREE      — Gemini Developer API free tier only, no billing, no
-//      paid fallback. gemini-2.0-flash is deliberately NOT in the model
-//      chain below: Google retired it in March 2026.
-//   3. MANY USES — a two-model free-tier fallback chain (see MODEL_CHAIN)
-//      plus a local cache so the same content is never re-billed against
-//      the daily quota twice. Together these make the free quota go a
-//      lot further per day.
-
 export const GEMINI_KEY_STORAGE = "pulse_gemini_key";
-
-// Full Flash first (better reasoning, fewer missed nuances), then drop to
-// Flash-Lite if Flash's free-tier quota is hit. Flash-Lite is a lighter
-// model, but it's still free, and its free-tier RPM/RPD ceiling is
-// several times more generous than full Flash's — so one busy model no
-// longer means "no summary today," it means a quick, quiet downgrade.
 const MODEL_CHAIN = ["gemini-2.5-flash", "gemini-2.5-flash-lite"];
 
 const CACHE_PREFIX = "pulse_summary_cache_v2:";
